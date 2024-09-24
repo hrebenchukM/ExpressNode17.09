@@ -30,7 +30,7 @@ app.post('/register', par,function(request, response){//пар чтоб по и�
     // console.log(str);
     // response.send('<h1>'+str+'</h1>');
     console.log('File writing...');
-fs.writeFile('register.txt', utils.format('%s', user), function(err){
+    fs.writeFile('register.txt', JSON.stringify(user) + '\n', function(err) {
     if(err){
         console.log(err);
         return;
@@ -53,17 +53,66 @@ app.post('/authoriz', par,function(request, response){//пар чтоб по и�
         email,
         password
     }
-    // console.log(str);
-    console.log('File writing...');
-fs.writeFile('autoriz.txt', utils.format('%s', user), function(err){
-    if(err){
-        console.log(err);
-        return;
-    }
-    console.log('File was wrote!');
- });
-   response.send('<h1>'+'OK'+'</h1>');
- })
+
+
+    if(fs.existsSync(__dirname))
+        {
+            fs.readFile('register.txt', {encoding : 'utf-8'}, function(err, data){
+                if(err){
+                    console.log(err);
+                    response.send('<h1>404</h1>');
+                    return;
+                }
+                const users = [];
+
+                data.split('\n').forEach(line => {
+                    if (line) {
+                            users.push(JSON.parse(line));
+                       
+                    }
+                });
+    
+
+                let curUser;
+
+                for (let i = 0; i < users.length; i++) {
+                if (users[i].login === login && users[i].email === email && users[i].password === password) {
+                curUser = users[i];
+                break;
+                }
+              }
+
+              if (curUser) {
+                console.log('User authorized');
+                console.log('File writing...');
+                fs.writeFile('autoriz.txt', utils.format('%s', curUser), function(err){
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                    console.log('File was wrote!');
+                 });
+                 response.send('<h1>'+'OK'+'</h1>');
+              }
+              else{
+                console.log('User NOT authorized');
+                response.send('<h1>'+'Registr first!'+'</h1>');
+              }
+            });
+           
+        }
+        else
+        {
+            console.log("No file");
+        }
+
+     
+         
+         })
+
+
+
+
 
 app.get('/', function(request, response){
     console.log(request.url);

@@ -1,5 +1,6 @@
 {
   login: 'marygrebenchuk',
   email: 'marya101204@gmail.com',
-  password: '77777'
+  password: '12345',
+  passwordConfirm: '12345'
 }
