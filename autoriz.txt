@@ -1,6 +1,1 @@
-{
-  login: 'marygrebenchuk',
-  email: 'marya101204@gmail.com',
-  password: '12345',
-  passwordConfirm: '12345'
-}
+2

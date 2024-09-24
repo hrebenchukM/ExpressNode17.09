@@ -41,18 +41,17 @@ app.post('/register', par,function(request, response){//пар чтоб по и�
  })
 
 
- 
+ var attemptN = 0;
 app.post('/authoriz', par,function(request, response){//пар чтоб по идентификаторам достать введнное значение
+    attemptN++; 
+    console.log('Attempts:', attemptN); 
+
     console.log('post');
     console.log(request.url);
     let login=request.body.login;
     let email=request.body.email;
     let password=request.body.password;
-    user = {
-        login,
-        email,
-        password
-    }
+  
 
 
     if(fs.existsSync(__dirname))
@@ -74,7 +73,7 @@ app.post('/authoriz', par,function(request, response){//пар чтоб по и�
     
 
                 let curUser;
-
+            
                 for (let i = 0; i < users.length; i++) {
                 if (users[i].login === login && users[i].email === email && users[i].password === password) {
                 curUser = users[i];
@@ -84,20 +83,20 @@ app.post('/authoriz', par,function(request, response){//пар чтоб по и�
 
               if (curUser) {
                 console.log('User authorized');
-                console.log('File writing...');
-                fs.writeFile('autoriz.txt', utils.format('%s', curUser), function(err){
-                    if(err){
-                        console.log(err);
-                        return;
-                    }
-                    console.log('File was wrote!');
-                 });
                  response.send('<h1>'+'OK'+'</h1>');
               }
               else{
                 console.log('User NOT authorized');
                 response.send('<h1>'+'Registr first!'+'</h1>');
               }
+              console.log('File writing...');
+              fs.writeFile('autoriz.txt', attemptN.toString(), function(err){
+                  if(err){
+                      console.log(err);
+                      return;
+                  }
+                  console.log('File was wrote!');
+               });
             });
            
         }
@@ -105,10 +104,7 @@ app.post('/authoriz', par,function(request, response){//пар чтоб по и�
         {
             console.log("No file");
         }
-
-     
-         
-         })
+})
 
 
 
