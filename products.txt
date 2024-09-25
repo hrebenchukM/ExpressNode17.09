@@ -1,0 +1,3 @@
+{"name":"Ноутбук","description":"lenovo l15","price":"55000","phone":"+380(99)541-02-72","index":"0"}
+{"name":"Пирожочек","description":"с вишней","price":"10","phone":"+380(99)541-02-72","index":"1"}
+{"name":"Nokia","description":"nokia","price":"40000","phone":"+480000000","index":"2"}
